@@ -16,7 +16,6 @@ module.exports = {
   },
 
   signinUser: (req, res, next) => {
-    // bcrypt.compare()
     db.any(`SELECT password FROM users WHERE username = '${req.body.username}';`, [true])
     .then((data) => {
       if (data.length === 0) {
