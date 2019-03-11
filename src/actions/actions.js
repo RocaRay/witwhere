@@ -5,19 +5,28 @@ export const testAction = () => ({
   payload: 123,
 });
 
-export const updatePlayerName = (value) => ({
-  type: types.UPDATE_PLAYER_NAME,
-  payload: value
+export const updateFooterInput = (e) => ({
+  type: types.UPDATE_FOOTER_INPUT,
+  payload: e.target.value
 });
 
-export const updatePlayerPass = (value) => ({
+export const updatePlayerName = (e) => ({
+  type: types.UPDATE_PLAYER_NAME,
+  payload: e.target.value
+});
+
+export const updatePlayerPass = (e) => ({
   type: types.UPDATE_PLAYER_PASS,
-  payload: value
+  payload: e.target.value
+});
+
+export const advanceStage = () => ({
+  type: types.ADVANCE_STAGE
 });
 
 export const testButton = () => (dispatch) => {
   console.log('test')
-  fetch('http://localhost:3000/api/signin', {
+  fetch('http://localhost:8080/api/signin', {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -36,7 +45,10 @@ export const testButton = () => (dispatch) => {
 export const addPlayer = () => (dispatch, getState) => {
   const pName = getState().main.playerName;
   const pPass = getState().main.playerPass;
-  const playerData = [pName, pPass];
+  const playerData = {
+    username: pName,
+    password: pPass
+  };
   // lets send that player to the database!
   fetch('/api/signin', {
     method: "POST",

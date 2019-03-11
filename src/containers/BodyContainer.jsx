@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 // import from child components when the time comes...
 
+import Player from '../components/Player.jsx'
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
+
 const mapStateToProps = store => ({
   playerName: store.main.playerName,
   playerPass: store.main.playerPass,
+  promptList: store.main.promptList,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -18,9 +23,11 @@ const mapDispatchToProps = dispatch => ({
 class BodyContainer extends Component {
   constructor(props) {
     super(props);
+    //this.socket = io.connect('http://localhost:3000');
   }
   
 
+<<<<<<< HEAD
   
   render(props) {
     var socket = io.connect('http://localhost:3000');
@@ -34,8 +41,58 @@ class BodyContainer extends Component {
         </form>
       </div>
     )
+=======
+  componentDidMount() {
+    
+>>>>>>> 6d4cd3ca99ccd4ac05cd6e0129dedbb722991686
   }
 
+    switch(this.props.gameStage) {
+      case 1: {
+        return(
+        <div className="body-container"></div>
+        )
+      }
+
+      case 2: {
+        return(
+          <div className="body-container">
+            <playercontainer id="lcontainer">
+              <Player />
+            </playercontainer>
+            <playercontainer id="rcontainer">
+              <Player />
+            </playercontainer>
+          </div>
+        )
+      }
+
+      case 3: {
+        return(
+          <div className="body-container">
+            <h2 className="prompt">{this.props.promptList[0]}</h2>
+          </div>
+        )
+      }
+
+      case 4: {
+        return(
+          <div className="body-container"></div>
+        )
+      }
+
+      case 5: {
+        return(
+          <div className="body-container"></div>
+        )
+      }
+
+
+      default: {
+        <div>error...</div>
+      }    
+    }
+  }  
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BodyContainer);
