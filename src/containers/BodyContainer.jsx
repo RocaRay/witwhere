@@ -19,13 +19,19 @@ class BodyContainer extends Component {
   constructor(props) {
     super(props);
   }
+  
 
+  
   render(props) {
-
+    var socket = io.connect('http://localhost:3000');
     return(
       <div className="body-container">
         <input value={'username'} /><input value={'password'} />
         <button onClick={this.props.testButton}>Submit</button>
+        <form >
+          <input type="text"></input>
+          <input type="submit"></input>
+        </form>
       </div>
     )
   }

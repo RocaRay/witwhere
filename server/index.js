@@ -4,10 +4,17 @@ const WebSocket = require('ws');
 const path = require('path')
 const userController = require('./controllers/data/db')
 const bodyParser = require('body-parser')
+const socket = require('socket.io');
+const server = app.listen(3000, () => console.log('listening on port 3000'))
+const io = socket(server);
 
-// app.use(express.static('../build'))
+app.use(express.static('../build'))
 
 const wss = new WebSocket.Server({ port: 8080 });
+
+io.on('connection', (socket) => {
+  console.log('socket.io connection made!')
+})
 
 wss.on('connection', (ws) => {
   ws.send('connected to WS server');
@@ -38,5 +45,8 @@ app.get('/', (req, res, next) => {
   // console.log('get route');
   res.sendFile(path.resolve(__dirname, '../index.html'));
 });
+
+app.get('/api/signup', bodyParser.json(), userController.createUser)
+app.get('/api/signin', bodyParser.json(), userController.signinUser)
 
 app.listen(3000, () => console.log("Listening on port 3k"))
